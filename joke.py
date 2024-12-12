@@ -50,7 +50,7 @@ def get_joke_explanation(joke):
             temperature=1.0,
             top_p=1.0,
             max_tokens=1000,
-            model="aistudioaiservices380522226148"
+            model="gpt-4o-mini"
         )
 
         print(response.choices[0].message.content)
