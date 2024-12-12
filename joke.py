@@ -25,17 +25,34 @@ client = ChatCompletionsClient(
 # Define a function to ask GPT-4 for an explanation
 def get_joke_explanation(joke):
     try:
-        chat_completion = client.chat.completions.create(
-        messages=[
-        {
-            "role": "user",
-            "content": f"Explain this joke: {joke}",
-        }
-        ],
-        model="gpt-4o-mini",
+        #chat_completion = client.chat.completions.create(
+        #messages=[
+        #{
+        #    "role": "user",
+        #    "content": f"Explain this joke: {joke}",
+        #}
+        #],
+        #model="gpt-4o-mini",
+        #)
+        #print(chat_completion.choices[0].message.content)
+        #return chat_completion.choices[0].message.content
+        #client = ChatCompletionsClient(
+        #endpoint=endpoint,
+        #credential=AzureKeyCredential(api_key),
+        #)
+
+        response = client.complete(
+            messages=[
+                SystemMessage(content="You are a helpful assistant."),
+                UserMessage(content="What is the capital of France?"),
+            ],
+            temperature=1.0,
+            top_p=1.0,
+            max_tokens=1000,
+            model="aistudioaiservices380522226148"
         )
-        print(chat_completion.choices[0].message.content)
-        return chat_completion.choices[0].message.content
+
+    print(response.choices[0].message.content)
     except Exception as e:
         return f"An error occurred: {str(e)}"
 
