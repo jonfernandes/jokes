@@ -44,7 +44,7 @@ def get_joke_explanation(joke):
         response = client.complete(
             messages=[
                 SystemMessage(content="You are a helpful assistant."),
-                UserMessage(content="What is the capital of France?"),
+                UserMessage(content=f"Explain this joke: {joke}"),
             ],
             temperature=1.0,
             top_p=1.0,
