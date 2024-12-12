@@ -5,11 +5,19 @@ from openai import OpenAI
 
 # To authenticate with the model you will need to generate a personal access token (PAT) in your GitHub settings. 
 # Create your PAT token by following instructions here: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
-client = OpenAI(
-    base_url="https://models.inference.ai.azure.com",
-    api_key=os.environ["GITHUB_TOKEN"],
-)
+#client = OpenAI(
+#    base_url="https://models.inference.ai.azure.com",
+#    api_key=os.environ["GITHUB_TOKEN"],
+#)
 
+import os
+from azure.ai.inference import ChatCompletionsClient
+from azure.core.credentials import AzureKeyCredential
+
+client = ChatCompletionsClient(
+    endpoint=os.environ["AZUREAI_ENDPOINT_URL"],
+    credential=AzureKeyCredential(os.environ["AZUREAI_ENDPOINT_KEY"]),
+)
 
 # Initialize the OpenAI API key
 # Please replace 'your_openai_api_key' with your actual OpenAI API key.
