@@ -13,6 +13,7 @@ from openai import OpenAI
 import os
 from azure.ai.inference import ChatCompletionsClient
 from azure.core.credentials import AzureKeyCredential
+from azure.ai.inference.models import SystemMessage, UserMessage
 
 client = ChatCompletionsClient(
     endpoint=os.environ["AZUREAI_ENDPOINT_URL"],
