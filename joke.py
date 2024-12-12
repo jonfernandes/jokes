@@ -52,7 +52,8 @@ def get_joke_explanation(joke):
             model="aistudioaiservices380522226148"
         )
 
-    print(response.choices[0].message.content)
+        print(response.choices[0].message.content)
+        return response.choices[0].message.content
     except Exception as e:
         return f"An error occurred: {str(e)}"
 
