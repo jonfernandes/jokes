@@ -11,13 +11,22 @@ from openai import OpenAI
 #)
 
 import os
-from azure.ai.inference import ChatCompletionsClient
-from azure.core.credentials import AzureKeyCredential
-from azure.ai.inference.models import SystemMessage, UserMessage
+#from azure.ai.inference import ChatCompletionsClient
+#from azure.core.credentials import AzureKeyCredential
+#from azure.ai.inference.models import SystemMessage, UserMessage
 
-client = ChatCompletionsClient(
-    endpoint=os.environ["AZUREAI_ENDPOINT_URL"],
-    credential=AzureKeyCredential(os.environ["AZUREAI_ENDPOINT_KEY"]),
+#client = ChatCompletionsClient(
+#    endpoint=os.environ["AZUREAI_ENDPOINT_URL"],
+#    credential=AzureKeyCredential(os.environ["AZUREAI_ENDPOINT_KEY"]),
+#)
+
+token = os.environ["GITHUB_TOKEN"]
+endpoint = "https://models.inference.ai.azure.com"
+model_name = "gpt-4o-mini"
+
+client = OpenAI(
+    base_url=endpoint,
+    api_key=token,
 )
 
 # Initialize the OpenAI API key
@@ -26,31 +35,21 @@ client = ChatCompletionsClient(
 # Define a function to ask GPT-4 for an explanation
 def get_joke_explanation(joke):
     try:
-        #chat_completion = client.chat.completions.create(
-        #messages=[
-        #{
-        #    "role": "user",
-        #    "content": f"Explain this joke: {joke}",
-        #}
-        #],
-        #model="gpt-4o-mini",
-        #)
-        #print(chat_completion.choices[0].message.content)
-        #return chat_completion.choices[0].message.content
-        #client = ChatCompletionsClient(
-        #endpoint=endpoint,
-        #credential=AzureKeyCredential(api_key),
-        #)
-
-        response = client.complete(
+        response = client.chat.completions.create(
             messages=[
-                SystemMessage(content="You are a helpful assistant."),
-                UserMessage(content=f"Explain this joke: {joke}"),
+                {
+                    "role": "system",
+                    "content": "You are a helpful assistant.",
+                },
+                {
+                    "role": "user",
+                    "content": f"Explain this joke: {joke}",
+                }
             ],
             temperature=1.0,
             top_p=1.0,
             max_tokens=1000,
-            model="gpt-4o-mini"
+            model=model_name
         )
 
         print(response.choices[0].message.content)
